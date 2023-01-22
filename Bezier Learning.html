@@ -1,0 +1,173 @@
+<html>
+    <head>
+        <script src="Engine.js" defer></script>
+        <style>
+            .slidecontainer {
+              width: 100%;
+            }
+            
+            .slider {
+              -webkit-appearance: none;
+              width: 80%;
+              height: 30px;
+              background: #e0e0e0;
+              outline: none;
+              opacity: 0.7;
+              -webkit-transition: .2s;
+              transition: opacity .2s;
+            }
+            
+            .slider:hover {
+              opacity: 1;
+            }
+            
+            .slider::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              appearance: none;
+              width: 25px;
+              height: 25px;
+              background: rgb(51, 11, 173);
+              cursor: pointer;
+            }
+            
+            .slider::-moz-range-thumb {
+              width: 25px;
+              height: 25px;
+              background: rgb(51, 11, 173);
+              cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <body style="background-color:rgb(34, 7, 117);">
+
+        <h1 style="color:white; font-family: Verdana, Geneva, Tahoma, sans-serif; text-align: center;">
+            Cubic Bezier Curves using Vector Addition
+        </h1>
+        <h3 style="color:white; font-family: Verdana, Geneva, Tahoma, sans-serif; text-align: center;">
+            Inspired by Freya Holm&eacute;r's "The Beauty of Bezier Curves"</br></br>
+            Instructions: Click any 4 points inside the big box
+        </h3>
+
+        <div style="text-align:center"> 
+            <canvas
+            id="clickCanvas"
+            width="500"
+            height="500" 
+            style="border:3px solid #ffffff;";
+            >
+            </canvas>
+
+            <canvas
+            id="ratioCanvas"  
+            width="300"
+            height="300" 
+            style="border:3px solid #ffffff;";
+            >
+            </canvas>
+        </div></br>
+        <h3 style="color:white; font-family: Verdana, Geneva, Tahoma, sans-serif; text-align: center;">
+            Next move the slider to watch the point move across your curve! </br>
+            On the right, you can see the weights that each of the points have on the resulting point at the current value </br>
+            Feel free to clear your curve and try another! </br>
+        </h3>
+        <div style= "text-align:center;">
+            <div class="slidecontainer">
+                <input type="range" min="0" max="100" value="50" class="slider" id="curveRange">
+            </div>
+        </div>
+        
+
+        <div style= 'text-align: center;'>
+            <button type="button" id="clearButton" style="font-family: Verdana, Geneva, Tahoma, sans-serif; height:50px; width:250px">
+                Clear
+            </button>
+        </div>
+    
+    </br></br></br>
+        
+        <div style="text-align:center"> 
+            <canvas
+            id="bernsteinOriginCanvas"  
+            width="400"
+            height="400" 
+            style="border:3px solid #ffffff;";
+            >
+            </canvas>
+        </div></br>
+
+        <h3 style="color:white; font-family: Verdana, Geneva, Tahoma, sans-serif; text-align: center;">
+            This window shows window shows a vector representation of each point with it's given weight applied</br>
+            These vectors can be interpreted as the component vectors of the point along the curve at the given value</br>
+        </h3>
+    
+        <div style= "text-align:center;">
+            <div class="slidecontainer">
+                <input type="range" min="0" max="100" value="50" class="slider" id="curveRange2">
+            </div>
+        </div></br>
+
+    </br></br>
+
+        <div style="text-align:center"> 
+            <canvas
+            id="bernsteinVectorCanvas"  
+            width="400"
+            height="400" 
+            style="border:3px solid #ffffff;";
+            >
+            </canvas>
+        </div></br>
+
+        <h3 style="color:white; font-family: Verdana, Geneva, Tahoma, sans-serif; text-align: center;">
+            Building on the previous window, this uses the same vectors but constructs them end to end</br>
+            to visually represent the vector addition of the component vectors</br>
+        </h3>
+
+        <div style= "text-align:center;">
+            <div class="slidecontainer">
+                <input type="range" min="0" max="100" value="50" class="slider" id="curveRange3">
+            </div>
+        </div></br>
+
+        <div style="text-align:center"> 
+            <canvas
+            id="derivativeCanvas"
+            width="500"
+            height="500" 
+            style="border:3px solid #ffffff;";
+            >
+            </canvas>
+        </div></br>
+        <h3 style="color:white; font-family: Verdana, Geneva, Tahoma, sans-serif; text-align: center;">
+            Here, we can explore the use of the derivatives of the functions representing the cubic bezier curve  </br>
+            with respect to the lerp value. Using the derivative functions instead of the cubic curve functions,</br>
+            we can find the velocity of the curve at any given lerp value. Normalizing the velocity vector and   </br>
+            mulitplying it by some scalar, we end up with a vector which represents the direction of movement of  </br>
+            the curve at a given point. We can also rotate this vector to get a vector in the direction of the  </br>
+            normal vector of the curve at a given point.  </br>
+        </h3>
+        <div style= "text-align:center;">
+            <div class="slidecontainer">
+                <input type="range" min="0" max="100" value="50" class="slider" id="curveRange4">
+            </div>
+        </div></br>
+        
+    </br></br>
+        <script>
+            (() => {
+
+            let canvases= ['clickCanvas', 'ratioCanvas', 'bernsteinOriginCanvas', 'bernsteinVectorCanvas', 'derivativeCanvas'];
+
+            for (let i= 0; i < canvases.length; i++)
+            {
+                let canvas = document.getElementById(canvases[i]);
+                let context = canvas.getContext("2d");
+
+                context.fillStyle = "rgb(14, 3, 48)";
+                context.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            })();
+        </script>
+    </body>
+</html>
